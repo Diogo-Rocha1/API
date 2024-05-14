@@ -59,4 +59,4 @@ jobs:
           USERNAME: ${{ secrets.anypoint_platform_username }}
           PASSWORD: ${{ secrets.anypoint_platform_password }}
         run: |
-          mvn -D ARTIFACTORY_USERNAME=${{secrets.anypoint_platform_username}} -D ARTIFACTORY_PASSWORD=${{secrets.anypoint_platform_password}} -B package org.mule.tools.maven:mule-maven-plugin:deploy -DmuleDeploy -DskipMunitTests -Dmonitoring_setup=true -Dvisualizer_layer=system -e --batch-mode
+          mvn -D ARTIFACTORY_USERNAME="Diogo-Rocha1" -D ARTIFACTORY_PASSWORD="7%#Hbc7y2E3L6Y" -B package org.mule.tools.maven:mule-maven-plugin:deploy -DmuleDeploy -DskipMunitTests -Dmonitoring_setup=true -Dvisualizer_layer=system -e --batch-mode
