@@ -64,5 +64,4 @@ jobs:
         mvn deploy -DmuleDeploy \
          -Dmule.artifact=$artifactName \
          -Danypoint.username="$USERNAME" \
-         -Danypoint.password="$PASSWORD" \
-         -Ddecryption.key="$KEY" -X
+         -Danypoint.password="$PASSWORD" -X
