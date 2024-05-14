@@ -32,9 +32,9 @@
 					<classifier>---- select project type ----</classifier>
 					<cloudHubDeployment>
 				      <muleVersion>4.6.1</muleVersion>
-				      <username>Diogo-Rocha1</username>
-				      <password>7%#Hbc7y2E3L6Y</password>
-				      <applicationName>email</applicationName>
+				      <username>${cd.username}</username>
+				      <password>${cd.password}</password>
+				      <applicationName>email.xml</applicationName>
 				      <environment>Sandbox</environment>
 				      <workers>1</workers>
 				      <workerType>MICRO</workerType>
