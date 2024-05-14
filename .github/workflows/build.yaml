@@ -60,7 +60,7 @@ jobs:
         PASSWORD: ${{ secrets.anypoint_platform_password }}
       run: |
         artifactName=$(ls *.jar | head -1)
-        mvn clean deploy -DmuleDeploy \
+        mvn -e clean deploy -D muleDeploy \
          -D mule.artifact=$artifactName \
-         -D anypoint.username="$USERNAME" \
-         -D anypoint.password="$PASSWORD" 
+         -D ARTIFACTORY_USERNAME="$USERNAME" \
+         -D ARTIFACTORY_PASSWORD="$PASSWORD" 
