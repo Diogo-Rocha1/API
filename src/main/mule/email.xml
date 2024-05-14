@@ -29,6 +29,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
 		<file:connection workingDir="/tmp" />
 	</file:config>
 	<email:imap-matcher name="Imap_matcher" doc:name="Imap matcher" doc:id="2b3e0c5e-fc12-4b6b-98f6-47e9b51a8f4f" subjectRegex="TESTE" />
+	<configuration-properties doc:name="Configuration properties" doc:id="e0c3e51e-fca2-4071-a0de-6ec35f1abe74" file="properties\config.yaml" />
 	<flow name="emailFlow" doc:id="c2830908-579e-4b2c-9c9d-c212bd70f425" >
 		<email:listener-imap doc:name="On New Email - IMAP" doc:id="4fd569e2-85e1-4f5b-a9cd-8ea90d67420b" config-ref="Email_IMAP" deleteAfterRetrieve="true">
 			<scheduling-strategy >
