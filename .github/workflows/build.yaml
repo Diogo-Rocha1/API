@@ -61,6 +61,6 @@ jobs:
       run: |
         artifactName=$(ls *.jar | head -1)
         mvn clean deploy -DmuleDeploy \
-         -Dmule.artifact=$artifactName \
-         -Danypoint.username="$USERNAME" \
-         -Danypoint.password="$PASSWORD" 
+         -D mule.artifact=$artifactName \
+         -D anypoint.username="$USERNAME" \
+         -D anypoint.password="$PASSWORD" 
