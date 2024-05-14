@@ -35,7 +35,7 @@
 				      <username>Diogo-Rocha1</username>
 				      <password>7%#Hbc7y2E3L6Y</password>
 				      <applicationName>email</applicationName>
-				      <environment>sandbox</environment>
+				      <environment>Sandbox</environment>
 				      <workers>1</workers>
 				      <workerType>MICRO</workerType>
 				   </cloudHubDeployment>
