@@ -86,7 +86,7 @@ p[first to end] map ((item, indi) -> item mapObject ((value, key, ind) -> if(ind
 			</scheduling-strategy>
 			<file:matcher filenamePattern="json.json" />
 		</file:listener>
-		<logger level="INFO" doc:name="xlsx payload" doc:id="30078106-2e7a-4f8c-85f6-25d4aa7310d0" message="Batata" />
+		<logger level="INFO" doc:name="xlsx payloada" doc:id="30078106-2e7a-4f8c-85f6-25d4aa7310d0" message="Batata" />
 		<ee:transform doc:name="Into xlsx" doc:id="73b15dfd-d3cb-4039-ad8d-da0c2284fb84">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
