@@ -35,8 +35,8 @@
 					      <muleVersion>4.6.1</muleVersion>
 					      <username>${username}</username>
 					      <password>${password}</password>
-					      <applicationName>${cloudhub.application.name}</applicationName>
-					      <environment>${environment}</environment>
+					      <applicationName>${applicationname}</applicationName>
+					      <environment>${env}</environment>
 					      <region>us-e2</region>
 					      <workers>1</workers>
 					      <workerType>MICRO</workerType>

@@ -1,3 +1,6 @@
-cd:
-  username: "Diogo-Rocha1"
-  password: "7%#Hbc7y2E3L6Y"
+
+username: "Diogo-Rocha1"
+password: "7%#Hbc7y2E3L6Y"
+applicationname: "email-api"
+env: "dev"
+key: "umachaveparatudo"
