@@ -36,7 +36,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
 			</scheduling-strategy>
 			<email:imap-matcher subjectRegex="^TESTE$" />
 		</email:listener-imap>
-		<ee:transform doc:name="Into JASON" doc:id="2590d61b-7b97-4f0c-8401-6ffe22f52002" >
+		<ee:transform doc:name="Into JSON" doc:id="2590d61b-7b97-4f0c-8401-6ffe22f52002" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
  
