@@ -59,6 +59,7 @@ jobs:
         USERNAME: ${{ secrets.anypoint_platform_username }}
         PASSWORD: ${{ secrets.anypoint_platform_password }}
       run: |
+        mvn --encrypt-master-password <password>
         artifactName=$(ls *.jar | head -1)
         mvn  \
          -D mule.artifact=$artifactName \
