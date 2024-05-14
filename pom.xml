@@ -8,7 +8,6 @@
 	<packaging>mule-application</packaging>
 
 	<name>email</name>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -31,6 +30,15 @@
 				<extensions>true</extensions>
 				<configuration>
 					<classifier>---- select project type ----</classifier>
+					<cloudHubDeployment>
+				      <muleVersion>4.6.1</muleVersion>
+				      <username>Diogo-Rocha1</username>
+				      <password>7%#Hbc7y2E3L6Y</password>
+				      <applicationName>email</applicationName>
+				      <environment>sandbox</environment>
+				      <workers>1</workers>
+				      <workerType>MICRO</workerType>
+				   </cloudHubDeployment>
 				</configuration>
 			</plugin>
 		</plugins>
