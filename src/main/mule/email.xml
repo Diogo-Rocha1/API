@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<email:imap-config name="Email_IMAP" doc:name="Email IMAP" doc:id="cb851869-b096-4919-b383-838420814cac" >
+		<email:imaps-connection host="imap.gmail.com" user="mulesoft244301@gmail.com" password="iovddgcgwoipymis " >
+			<tls:context >
+				<tls:trust-store insecure="true" />
+			</tls:context>
+		</email:imaps-connection>
+	</email:imap-config>
+	<file:config name="JSON" doc:name="File Config" doc:id="0de658e1-e148-43b7-98b5-7847e0af5770" >
+		<file:connection workingDir="/tmp" />
+	</file:config>
+	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="88a723dd-0d13-4d0c-8d09-ff0ea467b0a7" >
+		<email:smtp-connection host="smtp.gmail.com" port="587" user="mulesoft244301@gmail.com" password="iovddgcgwoipymis" >
+			<email:properties >
+				<email:property key="mail.smtp.starttls.enable" value="true" />
+				<email:property key="mail.debug" value="true" />
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<file:config name="XLSX" doc:name="File Config" doc:id="dc0bfb29-cbe4-4af3-854c-c941d41b2f0a" >
+		<file:connection workingDir="/tmp" />
+	</file:config>
+	<email:imap-matcher name="Imap_matcher" doc:name="Imap matcher" doc:id="2b3e0c5e-fc12-4b6b-98f6-47e9b51a8f4f" subjectRegex="TESTE" />
+	<flow name="emailFlow" doc:id="c2830908-579e-4b2c-9c9d-c212bd70f425" >
+		<email:listener-imap doc:name="On New Email - IMAP" doc:id="4fd569e2-85e1-4f5b-a9cd-8ea90d67420b" config-ref="Email_IMAP" deleteAfterRetrieve="true">
+			<scheduling-strategy >
+				<fixed-frequency frequency="10" timeUnit="SECONDS" />
+			</scheduling-strategy>
+			<email:imap-matcher subjectRegex="^TESTE$" />
+		</email:listener-imap>
+		<ee:transform doc:name="Into JSON" doc:id="2590d61b-7b97-4f0c-8401-6ffe22f52002" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+ 
+output application/json
+ 
+---
+ 
+{
+ 
+"EmailBody":payload.body,
+ 
+"EmailAttachment":payload.attachments[0]
+ 
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Json payload" doc:id="b3bff2ad-5ff0-48ab-acd8-62555cac88c4" />
+		<ee:transform doc:name="Show only data that we want" doc:id="9938441b-b044-4e08-a0be-c8947569e1d6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json 
+var remove =   {"A": "","B": "","C": "","D": "","E": "","F": "","G": "","H": "","I": "","J": "","K": "","L": "","M": "","N": ""}
+var index = ["","Expediente", "Comercio", "Nome do Comércio", "Cartão", "Valor do retrocesso", "Descrição moeda de recuo", "Data da transação", "Referência de Operação (P37)", "Tipo de incidente" , "Número", "Valor da operação" , "Descrição", "Idioma Requerido" ]
+
+//payload sem linhas brancas
+var p = ((payload.EmailAttachment."Cargos a Comercio") filter $ != remove)
+
+// ver onde começa
+var first = indexOf(p.B, "Expediente") + 1
+
+//ver onde acaba
+var end = (((p.B[5 to -1] map ((item, index) -> if (item == index) indexOf(p.B, item) else "")) filter $ != "")[0]) - 1
+
+
+---
+
+
+p[first to end] map ((item, indi) -> item mapObject ((value, key, ind) -> if(index[ind] == "Comercio")((index[ind]): value as Number as String {format: "000000000"} ) else ((index[ind]): value )if(value != "")) -- {"":""} ) ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<file:write doc:name="Print" doc:id="cb2687aa-0fe3-465d-be14-0c229bed0d60" config-ref="JSON" path="json.json" />
+	</flow>
+	<flow name="emailFlow1" doc:id="1352b258-5649-4580-9359-40015f315506">
+		<file:listener doc:name="On New or Updated File" doc:id="626b13b9-9886-43e2-8202-4d14f09f6a82" config-ref="JSON" autoDelete="true" watermarkMode="CREATED_TIMESTAMP" timeBetweenSizeCheck="5" timeBetweenSizeCheckUnit="SECONDS">
+			<scheduling-strategy>
+				<fixed-frequency />
+			</scheduling-strategy>
+			<file:matcher filenamePattern="json.json" />
+		</file:listener>
+		<logger level="INFO" doc:name="xlsx payload" doc:id="30078106-2e7a-4f8c-85f6-25d4aa7310d0" message="TT" />
+		<ee:transform doc:name="Into xlsx" doc:id="73b15dfd-d3cb-4039-ad8d-da0c2284fb84">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xlsx
+---
+{root: payload map (value, idx) ->{
+    "Expediente": value.Expediente,
+    "Comercio": value.Comercio,
+    "Nome do Comércio": value."Nome do Comércio",
+    "Cartão": value."Cartão",
+    "Valor do retrocesso": value."Valor do retrocesso",
+    "Descrição moeda de recuo": value."Descrição moeda de recuo",
+    "Data da transação": value."Data da transação",
+    "Referência de Operação (P37)": value."Referência de Operação (P37)",
+    "Tipo de Incidente": value."Tipo de incidente",
+    "Número": value."Número",
+    "Valor da operação": value."Valor da operação",
+    "Descrição": value."Descrição",
+    "Idioma Requerido": value."Idioma Requerido"
+}
+}
+
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<email:send doc:name="Send" doc:id="7668f398-2392-4ac1-b2a8-f13732941dc0" config-ref="Email_SMTP" fromAddress="mulesoft244301@gmail.com">
+			<email:to-addresses>
+				<email:to-address value="mulesoft244301@gmail.com" />
+			</email:to-addresses>
+			<email:body>
+				<email:content><![CDATA[Teste]]></email:content>
+			</email:body>
+			<email:attachments><![CDATA[#[{
+	"file.xlsx": payload
+	
+	}]]]></email:attachments>
+		</email:send>
+	</flow>
+</mule>
