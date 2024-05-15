@@ -29,22 +29,22 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					    <cloudHubDeployment>
-					      <uri>https://anypoint.mulesoft.com</uri>
-					      <muleVersion>4.6-java8</muleVersion>
-					      <username>${anypoint.username}</username>
-					      <password>${anypoint.password}</password>
-					      <applicationName>${project.name}-api</applicationName>
-					      <environment>Sandbox</environment>
-					      <region>us-east-2</region>
-					      <workers>1</workers>
-					      <workerType>MICRO</workerType>
-					      <properties>
-					        <anypoint.password>${anypoint.password}</anypoint.password>
-					        <anypoint.username>${anypoint.username}</anypoint.username>
-					      </properties>
-					    </cloudHubDeployment>
-					    <classifier>mule-application</classifier>
+					<cloudHubDeployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<muleVersion>4.6-java8</muleVersion>
+						<username>${anypoint.username}</username>
+						<password>${anypoint.password}</password>
+						<applicationName>${project.name}-api</applicationName>
+						<environment>Sandbox</environment>
+						<region>us-east-2</region>
+						<workers>1</workers>
+						<workerType>MICRO</workerType>
+						<properties>
+							<anypoint.password>${anypoint.password}</anypoint.password>
+							<anypoint.username>${anypoint.username}</anypoint.username>
+						</properties>
+					</cloudHubDeployment>
+					<classifier>---- select project type ----</classifier>
 				</configuration>
 			</plugin>
 		</plugins>
